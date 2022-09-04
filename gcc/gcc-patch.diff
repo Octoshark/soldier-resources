@@ -1,0 +1,45 @@
+diff --git a/gcc/cp/lang-specs.h b/gcc/cp/lang-specs.h
+index 8902ae1d2..8fa893630 100644
+--- a/gcc/cp/lang-specs.h
++++ b/gcc/cp/lang-specs.h
+@@ -31,6 +31,8 @@ along with GCC; see the file COPYING3.  If not see
+   {".c++", "@c++", 0, 0, 0},
+   {".C",   "@c++", 0, 0, 0},
+   {".CPP", "@c++", 0, 0, 0},
++  {".ixx", "@c++", 0, 0, 0},
++  {".cppm", "@c++", 0, 0, 0},
+   {".H",   "@c++-header", 0, 0, 0},
+   {".hpp", "@c++-header", 0, 0, 0},
+   {".hp",  "@c++-header", 0, 0, 0},
+diff --git a/libstdc++-v3/configure b/libstdc++-v3/configure
+index 16baffffc..e82b8eab8 100755
+--- a/libstdc++-v3/configure
++++ b/libstdc++-v3/configure
+@@ -15587,6 +15587,11 @@ if test "$enable_shared" = yes; then
+   glibcxx_compiler_pic_flag="$lt_prog_compiler_pic_CXX"
+   glibcxx_compiler_shared_flag="-D_GLIBCXX_SHARED"
+ 
++elif test "${with_pic+set}" = set; then
++  glibcxx_lt_pic_flag="-prefer-pic"
++  glibcxx_compiler_pic_flag="$lt_prog_compiler_pic_CXX"
++  glibcxx_compiler_shared_flag=
++
+ else
+   glibcxx_lt_pic_flag=
+   glibcxx_compiler_pic_flag=
+diff --git a/libstdc++-v3/configure.ac b/libstdc++-v3/configure.ac
+index 3e639279d..b5194dcb7 100644
+--- a/libstdc++-v3/configure.ac
++++ b/libstdc++-v3/configure.ac
+@@ -121,6 +121,11 @@ if test "$enable_shared" = yes; then
+   glibcxx_compiler_pic_flag="$lt_prog_compiler_pic_CXX"
+   glibcxx_compiler_shared_flag="-D_GLIBCXX_SHARED"
+ 
++elif test "${with_pic+set}" != set; then
++  glibcxx_lt_pic_flag="-prefer-pic"
++  glibcxx_compiler_pic_flag="$lt_prog_compiler_pic_CXX"
++  glibcxx_compiler_shared_flag=
++
+ else
+   glibcxx_lt_pic_flag=
+   glibcxx_compiler_pic_flag=
